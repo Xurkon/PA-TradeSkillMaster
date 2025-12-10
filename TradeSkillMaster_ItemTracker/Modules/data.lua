@@ -21,9 +21,11 @@ function Data:Initialize()
 	Data:RegisterEvent("GUILDBANKFRAME_OPENED", "EventHandler")
 	Data:RegisterEvent("GUILDBANKBAGSLOTS_CHANGED", "EventHandler")
 	Data:RegisterEvent("AUCTION_OWNED_LIST_UPDATE", "EventHandler")
-	-- Ascension WoW: Register for Personal and Realm Bank events
-	Data:RegisterEvent("ASCENSION_PERSONAL_BANK_UPDATE", "OnPersonalBankUpdate")
-	Data:RegisterEvent("ASCENSION_REALM_BANK_UPDATE", "OnRealmBankUpdate")
+
+	-- Ascension WoW: Try to register for Ascension-specific events (may not exist)
+	pcall(function() Data:RegisterEvent("ASCENSION_PERSONAL_BANK_UPDATE", "OnPersonalBankUpdate") end)
+	pcall(function() Data:RegisterEvent("ASCENSION_REALM_BANK_UPDATE", "OnRealmBankUpdate") end)
+
 	TSMAPI:RegisterForBagChange(function(...) Data:GetBagData(...) end)
 	TSMAPI:RegisterForBankChange(function(...) Data:GetBankData(...) end)
 
@@ -227,10 +229,10 @@ function Data:GetPersonalBankData()
 				if itemString then
 					local quantity = select(2, GetGuildBankItemInfo(tab, slot))
 					TSM.personalBanks[TSM.CURRENT_PLAYER].items[itemString] = (TSM.personalBanks[TSM.CURRENT_PLAYER].items[itemString] or 0) +
-					quantity
+						quantity
 					if itemString ~= baseItemString then
 						TSM.personalBanks[TSM.CURRENT_PLAYER].items[baseItemString] = (TSM.personalBanks[TSM.CURRENT_PLAYER].items[baseItemString] or 0) +
-						quantity
+							quantity
 					end
 				end
 			end

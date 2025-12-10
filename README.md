@@ -1,6 +1,6 @@
 # TradeSkillMaster - Project Ascension
 
-![Version](https://img.shields.io/badge/version-2.0.9-blue)
+![Version](https://img.shields.io/badge/version-2.1.0-blue)
 ![WoW Version](https://img.shields.io/badge/WoW-3.3.5a-orange)
 ![Project Ascension](https://img.shields.io/badge/Project-Ascension-purple)
 
@@ -23,12 +23,16 @@ A comprehensive auction house and crafting addon suite for **Project Ascension**
 
 ## Ascension-Specific Features
 
-### ItemTracker v2.0.9
+### ItemTracker v2.1.0
 
 - **Personal Bank Tracking** - Automatically tracks items in your Personal Bank
 - **Realm Bank Tracking** - Tracks items in the shared Realm Bank
 - Uses Ascension events: `ASCENSION_PERSONAL_BANK_UPDATE`, `ASCENSION_REALM_BANK_UPDATE`
 - PBank and RBank columns added to Inventory Viewer
+
+#### v2.1.0 Changes (2025-12-10)
+
+- Fixed `moduleAPIs` callback error: corrected "GetPlayerRealmBank" to "GetRealmBank"
 
 ## Installation
 
