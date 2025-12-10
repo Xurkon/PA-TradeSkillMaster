@@ -73,9 +73,10 @@ See [ChangeLog.txt](ChangeLog.txt) for full version history.
 
 **Recent Highlights:**
 
+- **v2.9.1-PA** — Crafting Gathering integration for Personal/Realm banks (ksoltanidev)
+- **v2.9.0-PA** — Ascension Personal/Realm Bank tracking, MIT license
 - **Rev701** — Major shopping, scanning, and market value algorithm overhaul
 - **v2.8.3.668** — Scan time display improvements  
-- **v2.8.3.667** — GetAll scan disable option
 - **v2.8.3.666** — Fixed market value algorithm, rewritten scanning
 
 ---
@@ -87,6 +88,7 @@ See [ChangeLog.txt](ChangeLog.txt) for full version history.
 | **Original Authors** | Sapu94, Bart39 |
 | **TSM Revived** | Gnomezilla, BlueAo, andrew6180, Yoshiyuka, DimaSheiko |
 | **Modern TSM (Rev701)** | XiusTV |
+| **Crafting Bank Integration** | [ksoltanidev](https://github.com/ksoltanidev) |
 | **Project Ascension Port** | [Xurkon](https://github.com/Xurkon) |
 
 ---
