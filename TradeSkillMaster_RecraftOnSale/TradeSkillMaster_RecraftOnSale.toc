@@ -1,0 +1,11 @@
+## Interface: 30300
+## Title: TradeSkillMaster_RecraftOnSale
+## Notes: Automatically requeue crafted items when sold via AH
+## Author: ksoltanidev
+## Version: 1.0.0
+## SavedVariables: AscensionTSM_RecraftOnSaleDB
+## Dependencies: TradeSkillMaster, TradeSkillMaster_Crafting, TradeSkillMaster_Mailing
+
+Locale\enUS.lua
+TradeSkillMaster_RecraftOnSale.lua
+Modules\Options.lua

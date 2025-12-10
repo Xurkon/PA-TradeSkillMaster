@@ -40,9 +40,9 @@
         }
 
         .hero {
-            background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-primary) 50%, #1a1625 100%);
-            padding: 4rem 2rem;
             text-align: center;
+            padding: 4rem 2rem 3rem;
+            background: linear-gradient(180deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
             border-bottom: 1px solid var(--border-color);
         }
 
@@ -246,7 +246,7 @@
         <h1>TradeSkillMaster: Revived</h1>
         <p class="subtitle">Comprehensive auction house, crafting, and gold-making addon suite for Project Ascension</p>
         <div class="badges">
-            <span class="badge badge-version">v2.9.1-PA</span>
+            <span class="badge badge-version">v2.9.2-PA</span>
             <span class="badge badge-base">Base v2.8.3</span>
             <span class="badge badge-wow">WoW 3.3.5a</span>
             <span class="badge badge-ascension">Project Ascension</span>
@@ -338,6 +338,18 @@
                         <td><strong>Warehousing</strong></td>
                         <td>Bank and guild bank inventory management</td>
                     </tr>
+                    <tr>
+                        <td><strong>CsvExtractor</strong></td>
+                        <td>Export TSM groups to CSV for spreadsheet analysis</td>
+                    </tr>
+                    <tr>
+                        <td><strong>RecraftOnSale</strong></td>
+                        <td>Auto-requeue crafts when items sell on AH</td>
+                    </tr>
+                    <tr>
+                        <td><strong>CRM</strong></td>
+                        <td>Customer relationship management - auto-whisper buyers</td>
+                    </tr>
                 </tbody>
             </table>
         </section>
@@ -345,6 +357,15 @@
         <section>
             <h2>📜 Changelog</h2>
             <div class="changelog">
+                <div class="changelog-item">
+                    <h3>v2.9.2-PA — Project Ascension (December 2025)</h3>
+                    <ul>
+                        <li>Added CsvExtractor module — export TSM groups to CSV (ksoltanidev)</li>
+                        <li>Added RecraftOnSale module — auto-requeue crafts on sale (ksoltanidev)</li>
+                        <li>Added CRM module — auto-whisper buyers on sale (ksoltanidev)</li>
+                        <li>GetPersonalBanksTotal alias for module compatibility</li>
+                    </ul>
+                </div>
                 <div class="changelog-item">
                     <h3>v2.9.1-PA — Project Ascension (December 2025)</h3>
                     <ul>

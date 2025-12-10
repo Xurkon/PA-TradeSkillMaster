@@ -1,0 +1,12 @@
+## Interface: 30300
+## Title: |cff00ff00TradeSkillMaster_CsvExtractor|r
+## Notes: Export TSM group items to CSV format.
+## Author: Gemlatune
+## Version: 1.0
+## Dependencies: TradeSkillMaster, TradeSkillMaster_AuctionDB
+## OptionalDeps: TradeSkillMaster_ItemTracker, TradeSkillMaster_Crafting
+## SavedVariables: AscensionTSM_CsvExtractorDB
+
+Locale\enUS.lua
+
+TradeSkillMaster_CsvExtractor.lua

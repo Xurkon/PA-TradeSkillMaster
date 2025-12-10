@@ -420,3 +420,6 @@ function TSM:GetRealmBankTotal(itemString)
 	end
 	return 0
 end
+
+-- Alias for CsvExtractor compatibility (uses plural form)
+TSM.GetPersonalBanksTotal = TSM.GetPersonalBankTotal

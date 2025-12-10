@@ -2,7 +2,7 @@
 
 [![Documentation](https://img.shields.io/badge/📖_Docs-GitHub_Pages-2ea44f?style=for-the-badge)](https://xurkon.github.io/PA-TradeSkillMaster/)
 
-![Version](https://img.shields.io/badge/version-v2.9.1--PA-blue)
+![Version](https://img.shields.io/badge/version-v2.9.2--PA-blue)
 ![Base](https://img.shields.io/badge/base-v2.8.3-green)
 ![WoW Version](https://img.shields.io/badge/WoW-3.3.5a-orange)
 ![Project Ascension](https://img.shields.io/badge/Project-Ascension-purple)
@@ -45,6 +45,9 @@ A comprehensive auction house, crafting, and gold-making addon suite for **Proje
 | **TSM_Mailing** | Automated mailing operations |
 | **TSM_Shopping** | Shopping lists, sniper, and deal finding |
 | **TSM_Warehousing** | Bank and guild bank inventory management |
+| **TSM_CsvExtractor** | Export TSM groups to CSV for spreadsheets |
+| **TSM_RecraftOnSale** | Auto-requeue crafts when items sell on AH |
+| **TSM_CRM** | Customer relationship management - auto-whisper buyers |
 
 ---
 
@@ -73,10 +76,10 @@ See [ChangeLog.txt](ChangeLog.txt) for full version history.
 
 **Recent Highlights:**
 
+- **v2.9.2-PA** — Added CsvExtractor, RecraftOnSale, and CRM modules (ksoltanidev)
 - **v2.9.1-PA** — Crafting Gathering integration for Personal/Realm banks (ksoltanidev)
 - **v2.9.0-PA** — Ascension Personal/Realm Bank tracking, MIT license
 - **Rev701** — Major shopping, scanning, and market value algorithm overhaul
-- **v2.8.3.668** — Scan time display improvements  
 - **v2.8.3.666** — Fixed market value algorithm, rewritten scanning
 
 ---
@@ -88,6 +91,7 @@ See [ChangeLog.txt](ChangeLog.txt) for full version history.
 | **Original Authors** | Sapu94, Bart39 |
 | **TSM Revived** | Gnomezilla, BlueAo, andrew6180, Yoshiyuka, DimaSheiko |
 | **Modern TSM (Rev701)** | XiusTV |
+| **CsvExtractor & RecraftOnSale** | [ksoltanidev](https://github.com/ksoltanidev) |
 | **Crafting Bank Integration** | [ksoltanidev](https://github.com/ksoltanidev) |
 | **Project Ascension Port** | [Xurkon](https://github.com/Xurkon) |
 
