@@ -343,23 +343,41 @@
         </section>
 
         <section>
-            <h2>📜 Changelog Highlights</h2>
+            <h2>📜 Changelog</h2>
             <div class="changelog">
                 <div class="changelog-item">
-                    <h3>Rev701 — Major Overhaul</h3>
+                    <h3>v2.9.0-PA — Project Ascension (December 2025)</h3>
                     <ul>
-                        <li>Fixed market value algorithm (previously broken in all prior versions)</li>
-                        <li>Rewritten auction scanning — 1.3x–27.3x faster, &lt;5% memory usage</li>
-                        <li>Shopping reliability improvements — tolerates AH desync</li>
-                        <li>Ascension Personal Bank and Realm Bank tracking</li>
+                        <li>Ascension Personal Bank and Realm Bank tracking in ItemTracker</li>
+                        <li>Custom events: ASCENSION_PERSONAL_BANK_UPDATE, ASCENSION_REALM_BANK_UPDATE</li>
+                        <li>PBank and RBank columns added to Inventory Viewer</li>
+                        <li>MIT License standardization</li>
+                        <li>GitHub Pages documentation</li>
                     </ul>
                 </div>
                 <div class="changelog-item">
-                    <h3>Earlier Versions</h3>
+                    <h3>v2.8.3.701 — Modern TSM by XiusTV (November 2025)</h3>
                     <ul>
-                        <li>v2.8.3.668 — Scan time display improvements</li>
-                        <li>v2.8.3.667 — GetAll scan disable option</li>
-                        <li>SharedMedia font support added</li>
+                        <li>Fixed market value algorithm (was completely broken in prior versions)</li>
+                        <li>Rewritten auction scanning — 1.3x–27.3x faster, &lt;5% memory</li>
+                        <li>Shopping reliability — tolerates AH desync, prevents "must meet minimum bid"</li>
+                        <li>Gather strings and item names cached for performance</li>
+                        <li>SharedMedia support for custom fonts</li>
+                    </ul>
+                </div>
+                <div class="changelog-item">
+                    <h3>v2.8.3.668 — TSM Revived by Gnomezilla (March 2023)</h3>
+                    <ul>
+                        <li>Total time elapsed shown after Full/Group Scan completion</li>
+                        <li>Time estimate format: elapsed / ~estimated total</li>
+                    </ul>
+                </div>
+                <div class="changelog-item">
+                    <h3>v2.8.3.666 — Major Algorithm Fixes (March 2023)</h3>
+                    <ul>
+                        <li>Market value algorithm finally works correctly</li>
+                        <li>Fixed database decoding crash</li>
+                        <li>GetAll scan disable option added</li>
                     </ul>
                 </div>
             </div>
