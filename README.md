@@ -2,7 +2,7 @@
 
 [![Documentation](https://img.shields.io/badge/📖_Docs-GitHub_Pages-2ea44f?style=for-the-badge)](https://xurkon.github.io/PA-TradeSkillMaster/)
 
-![Version](https://img.shields.io/badge/version-v2.9.0--PA-blue)
+![Version](https://img.shields.io/badge/version-v2.9.1--PA-blue)
 ![Base](https://img.shields.io/badge/base-v2.8.3-green)
 ![WoW Version](https://img.shields.io/badge/WoW-3.3.5a-orange)
 ![Project Ascension](https://img.shields.io/badge/Project-Ascension-purple)
