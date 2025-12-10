@@ -1,5 +1,7 @@
 # TradeSkillMaster: Revived — Project Ascension
 
+[![Documentation](https://img.shields.io/badge/📖_Docs-GitHub_Pages-2ea44f?style=for-the-badge)](https://xurkon.github.io/PA-TradeSkillMaster/)
+
 ![Version](https://img.shields.io/badge/version-Rev701-blue)
 ![Base](https://img.shields.io/badge/base-v2.8.3-green)
 ![WoW Version](https://img.shields.io/badge/WoW-3.3.5a-orange)
@@ -92,3 +94,5 @@ See [ChangeLog.txt](ChangeLog.txt) for full version history.
 ## 📄 License
 
 See [LICENSE](LICENSE) for details.
+
+[Documentation](docs/index.html)

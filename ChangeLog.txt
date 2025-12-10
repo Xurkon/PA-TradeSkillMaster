@@ -678,3 +678,5 @@ v0.1.1
 
 v0.1
 *First Beta Release!
+- Added documentation folder and home page.
+
