@@ -386,40 +386,37 @@ function TSM:GetPlayerGuild(player)
 	return TSM.characters[player].guild
 end
 
--- Ascension: Personal Bank getter
+-- Ascension: Personal Bank getter (from TSM.personalBanks table)
 function TSM:GetPlayerPersonalBank(player)
 	player = player or TSM.CURRENT_PLAYER
 	player = TSM.playerLookup[player] or player
-	if not player or not TSM.characters[player] then return end
-	return TSM.characters[player].personalBank
+	if not player or not TSM.personalBanks or not TSM.personalBanks[player] then return end
+	return TSM.personalBanks[player].items
 end
 
--- Ascension: Realm Bank getter
-function TSM:GetPlayerRealmBank(player)
-	player = player or TSM.CURRENT_PLAYER
-	player = TSM.playerLookup[player] or player
-	if not player or not TSM.characters[player] then return end
-	return TSM.characters[player].realmBank
+-- Ascension: Realm Bank getter (shared storage)
+function TSM:GetRealmBank()
+	if not TSM.realmBank then return end
+	return TSM.realmBank.items
 end
 
--- Ascension: Personal Bank total
+-- Ascension: Personal Bank total (across all characters)
 function TSM:GetPersonalBankTotal(itemString)
 	local total = 0
-	for _, data in pairs(TSM.characters) do
-		if data.personalBank then
-			total = total + (data.personalBank[itemString] or 0)
+	if TSM.personalBanks then
+		for _, data in pairs(TSM.personalBanks) do
+			if data.items then
+				total = total + (data.items[itemString] or 0)
+			end
 		end
 	end
 	return total
 end
 
--- Ascension: Realm Bank total
+-- Ascension: Realm Bank total (shared storage)
 function TSM:GetRealmBankTotal(itemString)
-	local total = 0
-	for _, data in pairs(TSM.characters) do
-		if data.realmBank then
-			total = total + (data.realmBank[itemString] or 0)
-		end
+	if TSM.realmBank and TSM.realmBank.items then
+		return TSM.realmBank.items[itemString] or 0
 	end
-	return total
+	return 0
 end

@@ -21,10 +21,19 @@ function Data:Initialize()
 	Data:RegisterEvent("GUILDBANKFRAME_OPENED", "EventHandler")
 	Data:RegisterEvent("GUILDBANKBAGSLOTS_CHANGED", "EventHandler")
 	Data:RegisterEvent("AUCTION_OWNED_LIST_UPDATE", "EventHandler")
+	-- Ascension WoW: Register for Personal and Realm Bank events
+	Data:RegisterEvent("ASCENSION_PERSONAL_BANK_UPDATE", "OnPersonalBankUpdate")
+	Data:RegisterEvent("ASCENSION_REALM_BANK_UPDATE", "OnRealmBankUpdate")
 	TSMAPI:RegisterForBagChange(function(...) Data:GetBagData(...) end)
 	TSMAPI:RegisterForBankChange(function(...) Data:GetBankData(...) end)
 
 	TSM.CURRENT_PLAYER, TSM.CURRENT_GUILD = UnitName("player"), GetGuildInfo("player")
+
+	-- Ascension WoW: Initialize personal banks and realm bank tables
+	TSM.personalBanks = TSM.personalBanks or {}
+	TSM.personalBanks[TSM.CURRENT_PLAYER] = TSM.personalBanks[TSM.CURRENT_PLAYER] or { items = {}, lastUpdate = 0 }
+	TSM.realmBank = TSM.realmBank or { items = {}, lastUpdate = 0 }
+
 	Data:StoreCurrentGuildInfo()
 end
 
@@ -112,7 +121,7 @@ function Data:GetBagData(state)
 		TSM.characters[TSM.CURRENT_PLAYER].bags[itemString] = quantity
 		if itemString ~= baseItemString then
 			TSM.characters[TSM.CURRENT_PLAYER].bags[baseItemString] = (TSM.characters[TSM.CURRENT_PLAYER].bags[baseItemString] or 0) +
-			quantity
+				quantity
 		end
 	end
 	TSM.characters[TSM.CURRENT_PLAYER].lastUpdate.bags = time()
@@ -128,7 +137,7 @@ function Data:GetBankData(state)
 		TSM.characters[TSM.CURRENT_PLAYER].bank[itemString] = quantity
 		if itemString ~= baseItemString then
 			TSM.characters[TSM.CURRENT_PLAYER].bank[baseItemString] = (TSM.characters[TSM.CURRENT_PLAYER].bank[baseItemString] or 0) +
-			quantity
+				quantity
 		end
 	end
 	TSM.characters[TSM.CURRENT_PLAYER].lastUpdate.bank = time()
@@ -177,10 +186,10 @@ function Data:GetGuildBankData()
 				if itemString then
 					local quantity = select(2, GetGuildBankItemInfo(tab, slot))
 					TSM.guilds[TSM.CURRENT_GUILD].items[itemString] = (TSM.guilds[TSM.CURRENT_GUILD].items[itemString] or 0) +
-					quantity
+						quantity
 					if itemString ~= baseItemString then
 						TSM.guilds[TSM.CURRENT_GUILD].items[baseItemString] = (TSM.guilds[TSM.CURRENT_GUILD].items[baseItemString] or 0) +
-						quantity
+							quantity
 					end
 				end
 			end
@@ -193,13 +202,22 @@ function Data:GetGuildBankData()
 	TSM.Sync:BroadcastUpdateRequest()
 end
 
--- Ascension: Scan Personal Bank (uses GuildBank API but stores separately)
+-- Ascension WoW: Event handler for Personal Bank updates
+function Data:OnPersonalBankUpdate()
+	Data:GetPersonalBankData()
+end
+
+-- Ascension WoW: Event handler for Realm Bank updates
+function Data:OnRealmBankUpdate()
+	Data:GetRealmBankData()
+end
+
+-- Ascension: Scan Personal Bank (uses GuildBank API, stores in TSM.personalBanks per-player)
 function Data:GetPersonalBankData()
-	-- Ensure personalBank table exists
-	if not TSM.characters[TSM.CURRENT_PLAYER].personalBank then
-		TSM.characters[TSM.CURRENT_PLAYER].personalBank = {}
-	end
-	wipe(TSM.characters[TSM.CURRENT_PLAYER].personalBank)
+	-- Ensure personalBanks table exists for this player
+	TSM.personalBanks = TSM.personalBanks or {}
+	TSM.personalBanks[TSM.CURRENT_PLAYER] = TSM.personalBanks[TSM.CURRENT_PLAYER] or { items = {}, lastUpdate = 0 }
+	wipe(TSM.personalBanks[TSM.CURRENT_PLAYER].items)
 
 	for tab = 1, GetNumGuildBankTabs() do
 		if select(5, GetGuildBankTabInfo(tab)) > 0 then
@@ -208,28 +226,26 @@ function Data:GetPersonalBankData()
 				local baseItemString = TSMAPI:GetBaseItemString(GetGuildBankItemLink(tab, slot))
 				if itemString then
 					local quantity = select(2, GetGuildBankItemInfo(tab, slot))
-					TSM.characters[TSM.CURRENT_PLAYER].personalBank[itemString] = (TSM.characters[TSM.CURRENT_PLAYER].personalBank[itemString] or 0) +
+					TSM.personalBanks[TSM.CURRENT_PLAYER].items[itemString] = (TSM.personalBanks[TSM.CURRENT_PLAYER].items[itemString] or 0) +
 					quantity
 					if itemString ~= baseItemString then
-						TSM.characters[TSM.CURRENT_PLAYER].personalBank[baseItemString] = (TSM.characters[TSM.CURRENT_PLAYER].personalBank[baseItemString] or 0) +
+						TSM.personalBanks[TSM.CURRENT_PLAYER].items[baseItemString] = (TSM.personalBanks[TSM.CURRENT_PLAYER].items[baseItemString] or 0) +
 						quantity
 					end
 				end
 			end
 		end
 	end
-	TSM.characters[TSM.CURRENT_PLAYER].lastUpdate.personalBank = time()
+	TSM.personalBanks[TSM.CURRENT_PLAYER].lastUpdate = time()
 	TSMAPI:InvalidateTooltipCache()
 	TSM.Sync:BroadcastUpdateRequest()
 end
 
--- Ascension: Scan Realm Bank (uses GuildBank API but stores separately)
+-- Ascension: Scan Realm Bank (uses GuildBank API, stores in shared TSM.realmBank)
 function Data:GetRealmBankData()
-	-- Ensure realmBank table exists
-	if not TSM.characters[TSM.CURRENT_PLAYER].realmBank then
-		TSM.characters[TSM.CURRENT_PLAYER].realmBank = {}
-	end
-	wipe(TSM.characters[TSM.CURRENT_PLAYER].realmBank)
+	-- Ensure realmBank table exists (shared across all players)
+	TSM.realmBank = TSM.realmBank or { items = {}, lastUpdate = 0 }
+	wipe(TSM.realmBank.items)
 
 	for tab = 1, GetNumGuildBankTabs() do
 		if select(5, GetGuildBankTabInfo(tab)) > 0 then
@@ -238,17 +254,15 @@ function Data:GetRealmBankData()
 				local baseItemString = TSMAPI:GetBaseItemString(GetGuildBankItemLink(tab, slot))
 				if itemString then
 					local quantity = select(2, GetGuildBankItemInfo(tab, slot))
-					TSM.characters[TSM.CURRENT_PLAYER].realmBank[itemString] = (TSM.characters[TSM.CURRENT_PLAYER].realmBank[itemString] or 0) +
-					quantity
+					TSM.realmBank.items[itemString] = (TSM.realmBank.items[itemString] or 0) + quantity
 					if itemString ~= baseItemString then
-						TSM.characters[TSM.CURRENT_PLAYER].realmBank[baseItemString] = (TSM.characters[TSM.CURRENT_PLAYER].realmBank[baseItemString] or 0) +
-						quantity
+						TSM.realmBank.items[baseItemString] = (TSM.realmBank.items[baseItemString] or 0) + quantity
 					end
 				end
 			end
 		end
 	end
-	TSM.characters[TSM.CURRENT_PLAYER].lastUpdate.realmBank = time()
+	TSM.realmBank.lastUpdate = time()
 	TSMAPI:InvalidateTooltipCache()
 	TSM.Sync:BroadcastUpdateRequest()
 end
@@ -265,10 +279,10 @@ function Data:ScanPlayerAuctions()
 		local name, _, quantity, _, _, _, _, _, buyout, _, _, _, wasSold = GetAuctionItemInfo("owner", i)
 		if wasSold == 0 and itemString then
 			TSM.characters[TSM.CURRENT_PLAYER].auctions[itemString] = (TSM.characters[TSM.CURRENT_PLAYER].auctions[itemString] or 0) +
-			quantity
+				quantity
 			if itemString ~= baseItemString then
 				TSM.characters[TSM.CURRENT_PLAYER].auctions[baseItemString] = (TSM.characters[TSM.CURRENT_PLAYER].auctions[baseItemString] or 0) +
-				quantity
+					quantity
 			end
 		end
 	end
