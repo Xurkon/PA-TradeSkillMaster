@@ -160,7 +160,7 @@ function TSM:RegisterModule()
 		{ key = "playerbags",         callback = "GetPlayerBags" },
 		{ key = "playerbank",         callback = "GetPlayerBank" },
 		{ key = "playerpersonalbank", callback = "GetPlayerPersonalBank" }, -- Ascension
-		{ key = "playerrealmbank",    callback = "GetPlayerRealmBank" }, -- Ascension
+		{ key = "playerrealmbank",    callback = "GetRealmBank" },    -- Ascension
 		{ key = "playermail",         callback = "GetPlayerMail" },
 		{ key = "guildbank",          callback = "GetGuildBank" },
 		{ key = "playerauctions",     callback = "GetPlayerAuctions" },
@@ -189,7 +189,9 @@ function TSM:GetTooltip(itemString)
 		local player, alts = TSM:GetPlayerTotal(itemString)
 		local guild = TSM:GetGuildTotal(itemString)
 		local auctions = TSM:GetAuctionsTotal(itemString)
-		grandTotal = grandTotal + player + alts + guild + auctions
+		local personalBank = TSM:GetPersonalBankTotal(itemString)
+		local realmBank = TSM:GetRealmBankTotal(itemString)
+		grandTotal = grandTotal + player + alts + guild + auctions + personalBank + realmBank
 		if grandTotal > 0 then
 			tinsert(text,
 				{
@@ -198,6 +200,15 @@ function TSM:GetTooltip(itemString)
 						"|cffffffff" .. player .. "|r", "|cffffffff" .. alts .. "|r", "|cffffffff" .. guild .. "|r",
 						"|cffffffff" .. auctions .. "|r")
 				})
+			-- Show Personal/Realm bank if any items found
+			if personalBank > 0 or realmBank > 0 then
+				tinsert(text,
+					{
+						left = "  " .. "Ascension Banks:",
+						right = format("(%s personal, %s realm)",
+							"|cffffffff" .. personalBank .. "|r", "|cffffffff" .. realmBank .. "|r")
+					})
+			end
 		end
 	elseif TSM.db.global.tooltip == "full" then
 		for name, data in pairs(TSM.characters) do
@@ -205,7 +216,12 @@ function TSM:GetTooltip(itemString)
 			local bank = data.bank[itemString] or 0
 			local auctions = data.auctions[itemString] or 0
 			local mail = data.mail[itemString] or 0
-			local total = bags + bank + auctions + mail
+			-- Add Personal Bank for this character
+			local personalBank = 0
+			if TSM.personalBanks and TSM.personalBanks[name] and TSM.personalBanks[name].items then
+				personalBank = TSM.personalBanks[name].items[itemString] or 0
+			end
+			local total = bags + bank + auctions + mail + personalBank
 			grandTotal = grandTotal + total
 
 			local bagText = "|cffffffff" .. bags .. "|r"
@@ -215,14 +231,26 @@ function TSM:GetTooltip(itemString)
 			local totalText = "|cffffffff" .. total .. "|r"
 
 			if total > 0 then
+				local rightText = format(L["%s (%s bags, %s bank, %s AH, %s mail)"],
+					"|cffffffff" .. totalText, "|cffffffff" .. bagText, "|cffffffff" .. bankText,
+					"|cffffffff" .. auctionText, "|cffffffff" .. mailText)
+				-- Add personal bank info if present
+				if personalBank > 0 then
+					rightText = rightText .. format(" +%s pbank", "|cff00ff00" .. personalBank .. "|r")
+				end
 				tinsert(text,
 					{
 						left = format("  %s:", name),
-						right = format(L["%s (%s bags, %s bank, %s AH, %s mail)"],
-							"|cffffffff" .. totalText, "|cffffffff" .. bagText, "|cffffffff" .. bankText,
-							"|cffffffff" .. auctionText, "|cffffffff" .. mailText)
+						right = rightText
 					})
 			end
+		end
+
+		-- Show Realm Bank (shared)
+		local realmBank = TSM:GetRealmBankTotal(itemString)
+		if realmBank > 0 then
+			grandTotal = grandTotal + realmBank
+			tinsert(text, { left = "  Realm Bank:", right = format("|cffffffff%s|r items", realmBank) })
 		end
 
 		for name, data in pairs(TSM.guilds) do
@@ -420,6 +448,3 @@ function TSM:GetRealmBankTotal(itemString)
 	end
 	return 0
 end
-
--- Alias for CsvExtractor compatibility (uses plural form)
-TSM.GetPersonalBanksTotal = TSM.GetPersonalBankTotal

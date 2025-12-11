@@ -1,3 +1,10 @@
+v2.2.0
+*Fixed Personal Bank scanning - withdrawals check was failing (returns -1), now also checks isViewable
+*Fixed tooltip to properly display Personal Bank and Realm Bank item counts
+*Simple tooltip mode: Shows "Ascension Banks: (X personal, Y realm)" line
+*Full tooltip mode: Shows "+X pbank" per character and "Realm Bank: X items" section
+*Added debug output for bank type detection (can be removed after testing)
+
 v2.0.9
 *Added Ascension Personal Bank tracking - auto-detects when Personal Bank is open
 *Added Ascension Realm Bank tracking - auto-detects when Realm Bank is open
@@ -56,3 +63,5 @@ v1.1
 
 v1.0
 *First Release Version!
+- Added documentation folder and home page.
+

@@ -2,7 +2,7 @@
 ## Title: |cff00ff00TradeSkillMaster_ItemTracker|r
 ## Notes: Tracks inventory across multiple characters including bags, banks, guild banks, auctions, and mail.
 ## Author: Sapu94, Bart39
-## Version: v2.0.9
+## Version: v2.2.0
 ## SavedVariables: AscensionTSM_ItemTrackerDB
 ## Dependency: TradeSkillMaster
 ## X-IconTexture: Interface\AddOns\TradeSkillMaster\Media\TSMLogo

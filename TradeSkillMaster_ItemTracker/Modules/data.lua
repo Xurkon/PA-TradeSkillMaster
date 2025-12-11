@@ -151,24 +151,31 @@ end
 -- Ascension: Detect which type of bank is open based on tab name
 function Data:GetAscensionBankType()
 	local tabName = select(1, GetGuildBankTabInfo(1)) or ""
+	print("[TSM ItemTracker] GetAscensionBankType - Tab1 name:", tabName)
 	if tabName:find("Personal") then
+		print("[TSM ItemTracker] Detected: PERSONAL bank")
 		return "personal"
 	elseif tabName:find("Realm") then
+		print("[TSM ItemTracker] Detected: REALM bank")
 		return "realm"
 	end
+	print("[TSM ItemTracker] Detected: GUILD bank (default)")
 	return "guild" -- standard guild bank
 end
 
 function Data:GetGuildBankData()
 	-- Ascension: Detect bank type before scanning
 	local bankType = Data:GetAscensionBankType()
+	print("[TSM ItemTracker] GetGuildBankData - bankType:", bankType)
 
 	if bankType == "personal" then
 		-- Route to Personal Bank storage
+		print("[TSM ItemTracker] Routing to GetPersonalBankData()")
 		Data:GetPersonalBankData()
 		return
 	elseif bankType == "realm" then
 		-- Route to Realm Bank storage
+		print("[TSM ItemTracker] Routing to GetRealmBankData()")
 		Data:GetRealmBankData()
 		return
 	end
@@ -221,23 +228,34 @@ function Data:GetPersonalBankData()
 	TSM.personalBanks[TSM.CURRENT_PLAYER] = TSM.personalBanks[TSM.CURRENT_PLAYER] or { items = {}, lastUpdate = 0 }
 	wipe(TSM.personalBanks[TSM.CURRENT_PLAYER].items)
 
-	for tab = 1, GetNumGuildBankTabs() do
-		if select(5, GetGuildBankTabInfo(tab)) > 0 then
+	local numTabs = GetNumGuildBankTabs()
+	print("[TSM ItemTracker] GetPersonalBankData - numTabs:", numTabs)
+
+	local totalItems = 0
+	for tab = 1, numTabs do
+		local tabName, tabIcon, isViewable, canDeposit, numWithdrawals = GetGuildBankTabInfo(tab)
+		print("[TSM ItemTracker] Tab", tab, ":", tabName, "viewable:", isViewable, "withdrawals:", numWithdrawals)
+		if numWithdrawals > 0 or isViewable then
 			for slot = 1, MAX_GUILDBANK_SLOTS_PER_TAB or 98 do
-				local itemString = TSMAPI:GetItemString(GetGuildBankItemLink(tab, slot))
-				local baseItemString = TSMAPI:GetBaseItemString(GetGuildBankItemLink(tab, slot))
-				if itemString then
-					local quantity = select(2, GetGuildBankItemInfo(tab, slot))
-					TSM.personalBanks[TSM.CURRENT_PLAYER].items[itemString] = (TSM.personalBanks[TSM.CURRENT_PLAYER].items[itemString] or 0) +
-						quantity
-					if itemString ~= baseItemString then
-						TSM.personalBanks[TSM.CURRENT_PLAYER].items[baseItemString] = (TSM.personalBanks[TSM.CURRENT_PLAYER].items[baseItemString] or 0) +
+				local link = GetGuildBankItemLink(tab, slot)
+				if link then
+					local itemString = TSMAPI:GetItemString(link)
+					local baseItemString = TSMAPI:GetBaseItemString(link)
+					if itemString then
+						local quantity = select(2, GetGuildBankItemInfo(tab, slot))
+						TSM.personalBanks[TSM.CURRENT_PLAYER].items[itemString] = (TSM.personalBanks[TSM.CURRENT_PLAYER].items[itemString] or 0) +
 							quantity
+						if itemString ~= baseItemString then
+							TSM.personalBanks[TSM.CURRENT_PLAYER].items[baseItemString] = (TSM.personalBanks[TSM.CURRENT_PLAYER].items[baseItemString] or 0) +
+								quantity
+						end
+						totalItems = totalItems + quantity
 					end
 				end
 			end
 		end
 	end
+	print("[TSM ItemTracker] GetPersonalBankData - Total items scanned:", totalItems)
 	TSM.personalBanks[TSM.CURRENT_PLAYER].lastUpdate = time()
 	TSMAPI:InvalidateTooltipCache()
 	TSM.Sync:BroadcastUpdateRequest()
