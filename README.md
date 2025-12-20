@@ -1,13 +1,22 @@
 # TradeSkillMaster: Revived — Project Ascension
 
 [![Documentation](https://img.shields.io/badge/📖_Docs-GitHub_Pages-2ea44f?style=for-the-badge)](https://xurkon.github.io/PA-TradeSkillMaster/)
+![Downloads](https://img.shields.io/github/downloads/Xurkon/PA-TradeSkillMaster/total?style=for-the-badge&label=DOWNLOADS&color=e67e22)
+[![Patreon](https://img.shields.io/badge/Patreon-Support-orange?style=for-the-badge&logo=patreon)](https://patreon.com/Xurkon)
+[![PayPal](https://img.shields.io/badge/PayPal-Donate-blue?style=for-the-badge&logo=paypal)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=kancerous@gmail.com)
 
 ![Version](https://img.shields.io/badge/version-v2.9.2--PA-blue)
 ![Base](https://img.shields.io/badge/base-v2.8.3-green)
 ![WoW Version](https://img.shields.io/badge/WoW-3.3.5a-orange)
 ![Project Ascension](https://img.shields.io/badge/Project-Ascension-purple)
 
+## ⚡ At a Glance
 A comprehensive auction house, crafting, and gold-making addon suite for **Project Ascension** (3.3.5a). Based on TSM v2.8.3 with extensive modernization and Ascension-specific enhancements.
+
+- **Ascension Specific**: Native support for Personal & Realm Banks, Custom Categories, and Mystic Enchants.
+- **Modernized Core**: Optimized scanning (<5% memory usage), fixed market/crafting costs, and improved UI.
+- **Complete Suite**: Includes all 10+ modules (Auctioning, Crafting, Mailing, Shopping, etc) in one package.
+- **Performance Tuned**: 1.3x–27.3x faster scanning specifically tuned for Ascension's unique item database.
 
 ---
 
