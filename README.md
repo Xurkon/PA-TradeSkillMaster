@@ -1,7 +1,8 @@
 # TradeSkillMaster: Revived — Project Ascension
 
 [![Documentation](https://img.shields.io/badge/📖_Docs-GitHub_Pages-2ea44f?style=for-the-badge)](https://xurkon.github.io/PA-TradeSkillMaster/)
-![Downloads](https://img.shields.io/github/downloads/Xurkon/PA-TradeSkillMaster/total?style=for-the-badge&label=DOWNLOADS&color=e67e22)
+![Total Downloads](https://img.shields.io/github/downloads/Xurkon/PA-TradeSkillMaster/total?style=for-the-badge&label=TOTAL%20DOWNLOADS&color=e67e22)
+![Latest Release](https://img.shields.io/github/downloads/Xurkon/PA-TradeSkillMaster/latest/total?style=for-the-badge&label=LATEST%20RELEASE&color=3498db)
 [![Patreon](https://img.shields.io/badge/Patreon-Support-orange?style=for-the-badge&logo=patreon)](https://patreon.com/Xurkon)
 [![PayPal](https://img.shields.io/badge/PayPal-Donate-blue?style=for-the-badge&logo=paypal)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=kancerous@gmail.com)
 
@@ -11,6 +12,7 @@
 ![Project Ascension](https://img.shields.io/badge/Project-Ascension-purple)
 
 ## ⚡ At a Glance
+
 A comprehensive auction house, crafting, and gold-making addon suite for **Project Ascension** (3.3.5a). Based on TSM v2.8.3 with extensive modernization and Ascension-specific enhancements.
 
 - **Ascension Specific**: Native support for Personal & Realm Banks, Custom Categories, and Mystic Enchants.
@@ -23,7 +25,6 @@ A comprehensive auction house, crafting, and gold-making addon suite for **Proje
 ## ✨ Features
 
 ### Core Improvements (Rev701)
-
 - **Fixed Market Value Algorithm** — Prices are now calculated correctly (previously broken in all prior versions)
 - **Rewritten Auction Scanning** — 1.3x–27.3x faster, uses <5% memory of old algorithm
 - **Shopping Reliability** — Tolerates AH desync, prevents "must meet minimum bid" errors
@@ -32,7 +33,6 @@ A comprehensive auction house, crafting, and gold-making addon suite for **Proje
 - **Accurate Time Estimates** — Full Scan shows `elapsed / ~estimated total` time
 
 ### Ascension-Specific Features
-
 - **Personal Bank Tracking** — Tracks items in your Personal Bank
 - **Realm Bank Tracking** — Tracks items in the shared Realm Bank  
 - **Custom Events** — `ASCENSION_PERSONAL_BANK_UPDATE`, `ASCENSION_REALM_BANK_UPDATE`
@@ -41,7 +41,6 @@ A comprehensive auction house, crafting, and gold-making addon suite for **Proje
 ---
 
 ## 📦 Included Modules
-
 | Module | Description |
 |--------|-------------|
 | **TradeSkillMaster** | Core addon with API, utilities, and settings |
@@ -61,7 +60,6 @@ A comprehensive auction house, crafting, and gold-making addon suite for **Proje
 ---
 
 ## 📥 Installation
-
 1. Download or clone this repository
 2. Copy **all folders** to `Interface/AddOns/`
 3. Restart WoW or type `/reload`
@@ -69,7 +67,6 @@ A comprehensive auction house, crafting, and gold-making addon suite for **Proje
 ---
 
 ## 🔧 Commands
-
 | Command | Description |
 |---------|-------------|
 | `/tsm` | Open the main TSM window |
@@ -80,7 +77,6 @@ A comprehensive auction house, crafting, and gold-making addon suite for **Proje
 ---
 
 ## 📜 Changelog
-
 See [ChangeLog.txt](ChangeLog.txt) for full version history.
 
 **Recent Highlights:**
@@ -94,7 +90,6 @@ See [ChangeLog.txt](ChangeLog.txt) for full version history.
 ---
 
 ## 👥 Credits
-
 | Role | Contributors |
 |------|--------------|
 | **Original Authors** | Sapu94, Bart39 |
@@ -107,7 +102,6 @@ See [ChangeLog.txt](ChangeLog.txt) for full version history.
 ---
 
 ## 📄 License
-
 See [LICENSE](LICENSE) for details.
 
 [Documentation](docs/index.html)
