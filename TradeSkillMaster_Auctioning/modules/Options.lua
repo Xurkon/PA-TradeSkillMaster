@@ -163,6 +163,12 @@ function Options:DrawGeneralSettings(container)
 							tooltip = L["If checked, TSM will not print out a chat message when you have an invalid price for an item. However, it will still show as invalid in the log."],
 						},
 						{
+							type = "CheckBox",
+							label = L["Flash Warning Rows Red"],
+							settingInfo = { TSM.db.global, "enableWarningFlash" },
+							tooltip = L["If checked, items with vendor price warnings will flash red in the log during post scans."],
+						},
+						{
 							type = "Dropdown",
 							label = L["Default Operation Tab"],
 							list = { L["General"], L["Post"], L["Cancel"], L["Reset"] },

@@ -21,6 +21,7 @@ local CYAN = "|cff99ffff"
 local info = {
 	post = {
 		invalid = {L["Item/Group is invalid."], RED},
+		vendorWarning = {L["Below vendor sell price."], RED},
 		notEnough = {L["Not enough items in bags."], ORANGE},
 		belowMinPrice = {L["Cheapest auction below min price."], ORANGE},
 		tooManyPosted = {L["Maximum amount already posted."], CYAN},

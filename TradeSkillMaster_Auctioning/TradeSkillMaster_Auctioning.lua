@@ -26,6 +26,7 @@ local savedDBDefaults = {
 		matchWhitelist = true,
 		roundNormalPrice = false,
 		disableInvalidMsg = false,
+		enableWarningFlash = true, -- Flash warning rows red in log
 		defaultOperationTab = 1,
 		priceColumn = 1,
 		tooltip = true,
@@ -41,6 +42,14 @@ local savedDBDefaults = {
 function TSM:OnInitialize()
 	-- load the savedDB into TSM.db
 	TSM.db = LibStub:GetLibrary("AceDB-3.0"):New("AscensionTSM_AuctioningDB", savedDBDefaults, true)
+
+	-- Migration: Add new settings for existing SavedVariables that don't have them
+	if TSM.db.global.enableWarningFlash == nil then
+		TSM.db.global.enableWarningFlash = true
+	end
+	
+	-- Initialize vendor warning tracking table
+	TSM.vendorWarningItems = {}
 
 	-- Modules are now created directly in their files and assigned to TSM[name]
 	-- This loop is kept for backwards compatibility if TSM.modules exists
@@ -172,7 +181,10 @@ function TSM:GetTooltip(itemString)
 			normPrice = (TSMAPI:FormatTextMoney(prices.normalPrice, "|cffffffff") or "|cffffffff---|r")
 			maxPrice = (TSMAPI:FormatTextMoney(prices.maxPrice, "|cffffffff") or "|cffffffff---|r")
 		end
-		tinsert(text, { left = "  " .. L["Auctioning Prices:"], right = format(L["Min (%s), Normal (%s), Max (%s)"], minPrice, normPrice, maxPrice) })
+		-- Split into separate lines to prevent tooltip overflow
+		tinsert(text, { left = "  " .. L["Min Price:"], right = minPrice })
+		tinsert(text, { left = "  " .. L["Normal Price:"], right = normPrice })
+		tinsert(text, { left = "  " .. L["Max Price:"], right = maxPrice })
 	end
 
 	if #text > 0 then

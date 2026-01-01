@@ -13,6 +13,63 @@ TSM.GUI = GUI
 local AceGUI = LibStub("AceGUI-3.0")
 local private = {}
 
+-- Vendor warning flash animation
+private.warningFlashState = false
+private.warningFlashTime = 0
+local FLASH_INTERVAL = 0.5 -- Flash every half second
+
+-- Create flash animation frame
+local flashFrame = CreateFrame("Frame")
+flashFrame:Hide()
+flashFrame:SetScript("OnUpdate", function(self, elapsed)
+	private.warningFlashTime = private.warningFlashTime + elapsed
+	if private.warningFlashTime >= FLASH_INTERVAL then
+		private.warningFlashTime = 0
+		private.warningFlashState = not private.warningFlashState
+		-- Refresh log ST rows to update flash colors
+		if private.logST and private.logST:IsVisible() then
+			private:UpdateWarningFlash()
+		end
+	end
+end)
+
+-- Update warning flash colors on log rows
+function private:UpdateWarningFlash()
+	if not private.logST or not private.logST.rows then return end
+	-- Check if flash is enabled (default true if not set)
+	local flashEnabled = true
+	if TSM.db and TSM.db.global and TSM.db.global.enableWarningFlash == false then
+		flashEnabled = false
+	end
+	
+	for i, row in ipairs(private.logST.rows) do
+		-- Check if this visible row has an item with a warning (check directly from vendorWarningItems)
+		local hasWarning = false
+		if row.data and row.data.itemString and TSM.vendorWarningItems then
+			hasWarning = TSM.vendorWarningItems[row.data.itemString] or false
+		end
+		
+		if hasWarning and flashEnabled then
+			-- Create warning texture if it doesn't exist
+			if not row.warningBg then
+				row.warningBg = row:CreateTexture(nil, "BACKGROUND")
+				row.warningBg:SetAllPoints()
+			end
+			if private.warningFlashState then
+				row.warningBg:SetTexture(1, 0.2, 0.2, 0.4) -- Red flash
+				row.warningBg:Show()
+			else
+				row.warningBg:Hide()
+			end
+		elseif row.warningBg then
+			row.warningBg:Hide()
+		end
+	end
+end
+
+
+
+
 function private:CreateButtons(parent)
 	local height = 24
 	local frame = CreateFrame("Frame", nil, parent)
@@ -635,6 +692,7 @@ function private:GetLogSTRow(record, recordIndex)
 		lowestBuyout = lowestBuyout,
 		seller = seller,
 		info = infoText,
+		hasVendorWarning = TSM.vendorWarningItems and TSM.vendorWarningItems[record.itemString] or false,
 	}
 	
 	private.logST.cache[record] = row
@@ -682,6 +740,8 @@ function private:Stopped(notDone)
 	private.buttons:Disable(true)
 	private.statusBar:UpdateStatus(100, 100)
 	private.contentButtons.currAuctionsButton:Hide()
+	-- Stop vendor warning flash animation
+	flashFrame:Hide()
 	
 	if private.mode == "Post" then
 		TSMAPI:CreateTimeDelay(0.5, SetGoldText)
@@ -894,6 +954,8 @@ function GUI:StartScan(frame)
 	private.selectionFrame:Hide()
 	private.scanFrame = private.scanFrame or GUI:CreateScanFrame(frame)
 	private.scanFrame:Show()
+	-- Start vendor warning flash animation
+	flashFrame:Show()
 	private.statusBar:Show()
 	private.buttons:Show()
 	private.buttons:UpdateMode()

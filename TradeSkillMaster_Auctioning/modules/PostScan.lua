@@ -31,33 +31,56 @@ function Post:ValidateOperation(itemString, operation)
 			TSM:Printf(L["Did not post %s because your minimum price (%s) is invalid. Check your settings."], itemLink or itemString, operation.minPrice)
 		end
 		TSM.Log:AddLogRecord(itemString, "post", "Skip", "invalid", operation)
+		-- Track this invalid item for visual flash in UI
+		TSM.vendorWarningItems = TSM.vendorWarningItems or {}
+		TSM.vendorWarningItems[itemString] = true
 	elseif not prices.maxPrice then
 		if not TSM.db.global.disableInvalidMsg then
 			TSM:Printf(L["Did not post %s because your maximum price (%s) is invalid. Check your settings."], itemLink or itemString, operation.maxPrice)
 		end
 		TSM.Log:AddLogRecord(itemString, "post", "Skip", "invalid", operation)
+		-- Track this invalid item for visual flash in UI
+		TSM.vendorWarningItems = TSM.vendorWarningItems or {}
+		TSM.vendorWarningItems[itemString] = true
 	elseif not prices.normalPrice then
 		if not TSM.db.global.disableInvalidMsg then
 			TSM:Printf(L["Did not post %s because your normal price (%s) is invalid. Check your settings."], itemLink or itemString, operation.normalPrice)
 		end
 		TSM.Log:AddLogRecord(itemString, "post", "Skip", "invalid", operation)
+		-- Track this invalid item for visual flash in UI
+		TSM.vendorWarningItems = TSM.vendorWarningItems or {}
+		TSM.vendorWarningItems[itemString] = true
 	elseif not prices.undercut then
 		if not TSM.db.global.disableInvalidMsg then
 			TSM:Printf(L["Did not post %s because your undercut (%s) is invalid. Check your settings."], itemLink or itemString, operation.undercut)
 		end
 		TSM.Log:AddLogRecord(itemString, "post", "Skip", "invalid")
+		-- Track this invalid item for visual flash in UI
+		TSM.vendorWarningItems = TSM.vendorWarningItems or {}
+		TSM.vendorWarningItems[itemString] = true
 	elseif prices.normalPrice < prices.minPrice then
 		if not TSM.db.global.disableInvalidMsg then
 			TSM:Printf(L["Did not post %s because your normal price (%s) is lower than your minimum price (%s). Check your settings."], itemLink or itemString, operation.normalPrice, operation.minPrice)
 		end
 		TSM.Log:AddLogRecord(itemString, "post", "Skip", "invalid", operation)
+		-- Track this invalid item for visual flash in UI
+		TSM.vendorWarningItems = TSM.vendorWarningItems or {}
+		TSM.vendorWarningItems[itemString] = true
 	elseif prices.maxPrice < prices.minPrice then
 		if not TSM.db.global.disableInvalidMsg then
 			TSM:Printf(L["Did not post %s because your maximum price (%s) is lower than your minimum price (%s). Check your settings."], itemLink or itemString, operation.maxPrice, operation.minPrice)
 		end
 		TSM.Log:AddLogRecord(itemString, "post", "Skip", "invalid", operation)
+		-- Track this invalid item for visual flash in UI
+		TSM.vendorWarningItems = TSM.vendorWarningItems or {}
+		TSM.vendorWarningItems[itemString] = true
 	elseif salePrice > 0 and prices.minPrice <= salePrice*1.05 then
-		TSM:Printf(L["WARNING: You minimum price for %s is below its vendorsell price (with AH cut taken into account). Consider raising your minimum price, or vendoring the item."], itemLink or itemString)
+		if not TSM.db.global.disableInvalidMsg then
+			TSM:Printf(L["WARNING: You minimum price for %s is below its vendorsell price (with AH cut taken into account). Consider raising your minimum price, or vendoring the item."], itemLink or itemString)
+		end
+		-- Track this warning for visual flash in UI
+		TSM.vendorWarningItems = TSM.vendorWarningItems or {}
+		TSM.vendorWarningItems[itemString] = true
 		return true -- just a warning, doesn't make this invalid
 	else
 		return true
@@ -99,6 +122,7 @@ function Post:GetScanListAndSetup(GUIRef, options)
 	wipe(currentItem)
 	wipe(itemLocations)
 	wipe(TSM.operationLookup)
+	TSM.vendorWarningItems = {} -- Clear previous vendor warnings
 	totalToPost, totalPosted, count = 0, 0, 0
 
 	local tempList, scanList = {}, {}
