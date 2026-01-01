@@ -6,7 +6,7 @@
 [![Patreon](https://img.shields.io/badge/Patreon-Support-orange?style=for-the-badge&logo=patreon)](https://patreon.com/Xurkon)
 [![PayPal](https://img.shields.io/badge/PayPal-Donate-blue?style=for-the-badge&logo=paypal)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=kancerous@gmail.com)
 
-![Version](https://img.shields.io/badge/version-v2.9.2--PA-blue)
+![Version](https://img.shields.io/badge/version-v2.9.3--PA-blue)
 ![Base](https://img.shields.io/badge/base-v2.8.3-green)
 ![WoW Version](https://img.shields.io/badge/WoW-3.3.5a-orange)
 ![Project Ascension](https://img.shields.io/badge/Project-Ascension-purple)
@@ -81,6 +81,7 @@ See [ChangeLog.txt](ChangeLog.txt) for full version history.
 
 **Recent Highlights:**
 
+- **v2.9.3-PA** — Fixed TSM_Auctioning missing locale entries (Min Price, Max Price)
 - **v2.9.2-PA** — Added CsvExtractor, RecraftOnSale, and CRM modules (ksoltanidev)
 - **v2.9.1-PA** — Crafting Gathering integration for Personal/Realm banks (ksoltanidev)
 - **v2.9.0-PA** — Ascension Personal/Realm Bank tracking, MIT license
