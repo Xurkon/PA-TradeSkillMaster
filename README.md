@@ -98,7 +98,7 @@ See [ChangeLog.txt](ChangeLog.txt) for full version history.
 | **Modern TSM (Rev701)** | XiusTV |
 | **CsvExtractor & RecraftOnSale** | [ksoltanidev](https://github.com/ksoltanidev) |
 | **Crafting Bank Integration** | [ksoltanidev](https://github.com/ksoltanidev) |
-| **Project Ascension Port** | [Xurkon](https://github.com/Xurkon) |
+| **Project Ascension Updates** | [Xurkon](https://github.com/Xurkon) |
 
 ---
 
